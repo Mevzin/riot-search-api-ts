@@ -1,0 +1,1 @@
+# riot-search-api-ts
