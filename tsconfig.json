@@ -15,14 +15,7 @@
 		"strictPropertyInitialization": false,
 		"emitDecoratorMetadata": true,
 		"skipLibCheck": true,
-		"baseUrl": "./src/",
-		"paths": {
-			"@middlewares/*": ["middlewares/*"],
-			"@controllers/*": ["controllers/*"],
-			"@errors/*": ["errors/*"],
-			"@models/*": ["models/*"],
-			"@utils/*": ["utils/*"]
-		}
+		"baseUrl": "./src/"
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "dist"],
