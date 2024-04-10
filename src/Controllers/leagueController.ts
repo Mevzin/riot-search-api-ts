@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { detailsMatchs, searchByPuuid, searchByTagline, searchMatchsIds } from './../service/apiRiot';
+import { detailsMatchs, rankProfile, searchByPuuid, searchByTagline, searchMatchsIds } from './../service/apiRiot';
 import { AppError } from '../Errors/AppError';
 
 export class leagueController {
@@ -26,6 +26,7 @@ export class leagueController {
             throw new AppError("User not found", 404)
         }
     }
+
     async searchMatch(req: Request, res: Response) {
         const { puuid } = req.params;
         let matchlist = [];
@@ -34,10 +35,21 @@ export class leagueController {
 
             for (let i = 0; i < listMatchs.data.length; i++) {
                 const matchInfo = await detailsMatchs.get(`${listMatchs.data[i]}`)
-                console.log(matchInfo)
                 matchlist.push(matchInfo.data)
             }
             res.status(200).json({ matchlist })
+        } catch (error) {
+            throw new AppError("Internal server error", 500)
+        }
+    }
+
+    async profileRank(req: Request, res: Response) {
+        const { puuid } = req.params;
+
+        try {
+            const rankTiers = await rankProfile.get(`/${puuid}`)
+
+            res.status(200).json({ rank: rankTiers.data })
         } catch (error) {
             console.error(error)
             throw new AppError("Internal server error", 500)

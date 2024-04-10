@@ -25,3 +25,9 @@ export const detailsMatchs = axios.create({
     baseURL: routesApi.matchsDetails,
     headers: { "X-Riot-Token": process.env.API_KEY }
 })
+
+// /lol/match/v5/matches/{matchId}
+export const rankProfile = axios.create({
+    baseURL: routesApi.rankProfile,
+    headers: { "X-Riot-Token": process.env.API_KEY }
+})
