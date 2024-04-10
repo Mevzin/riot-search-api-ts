@@ -4,5 +4,6 @@ import { Router } from 'express'
 const leagueRoutes = Router();
 
 leagueRoutes.get('/searchUser/:name/:tag', new leagueController().searchUser)
+leagueRoutes.get('/searchMatchs/:puuid', new leagueController().searchMatch)
 
 export { leagueRoutes };
