@@ -3,6 +3,6 @@ import { Router } from 'express'
 
 const leagueRoutes = Router();
 
-leagueRoutes.get('/searchUser/:gameName/:tagline', new leagueController().searchUser)
+leagueRoutes.get('/searchUser/:name/:tag', new leagueController().searchUser)
 
 export { leagueRoutes };
