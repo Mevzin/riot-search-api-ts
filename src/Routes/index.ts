@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { leagueRoutes } from './league.routes';
 
-const router = Router();
+const routes = Router();
+routes.use('/league', leagueRoutes);
 
-router.use('/league', leagueRoutes);
+export { routes }
