@@ -31,3 +31,9 @@ export const rankProfile = axios.create({
     baseURL: routesApi.rankProfile,
     headers: { "X-Riot-Token": process.env.API_KEY }
 })
+
+// /lol/spectator/v5/active-games/by-summoner/{encryptedPUUID}
+export const spectateProfile = axios.create({
+    baseURL: routesApi.spectateProfile,
+    headers: { "X-Riot-Token": process.env.API_KEY }
+})

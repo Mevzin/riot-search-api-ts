@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { detailsMatchs, rankProfile, searchByPuuid, searchByTagline, searchMatchsIds } from './../service/apiRiot';
+import { detailsMatchs, rankProfile, searchByPuuid, searchByTagline, searchMatchsIds, spectateProfile } from './../service/apiRiot';
 import { AppError } from '../Errors/AppError';
 
 export class leagueController {
@@ -21,8 +21,6 @@ export class leagueController {
                 summonerLevel: userProfile.data.summonerLevel
             })
         } catch (error) {
-            console.error(error);
-
             throw new AppError("User not found", 404)
         }
     }
@@ -51,8 +49,19 @@ export class leagueController {
 
             res.status(200).json({ rank: rankTiers.data })
         } catch (error) {
-            console.error(error)
             throw new AppError("Internal server error", 500)
+        }
+    }
+
+    async spectateProfile(req: Request, res: Response) {
+        const { puuid } = req.params;
+
+        try {
+            const spectate = await spectateProfile.get(`/${puuid}`)
+
+            res.status(200).json({ gameData: spectate.data })
+        } catch (error) {
+            throw new AppError("User not playing", 404)
         }
     }
 }
