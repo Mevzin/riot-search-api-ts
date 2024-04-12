@@ -1,0 +1,115 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "RentX Documentation",
+      "dscription": "This is an API RentX",
+      "version": "1.0.0",
+      "contact": {
+        "name": "Thiago Torres",
+        "email": "thiagomev@gmail.com"
+      }
+    },
+    "paths":{
+      "/api/league/searchUser/{gameName}/{tagLine}": {
+        "get": {
+          "tags": ["League of Legends"],
+          "summary": "Search user by riotId",
+          "description": "Search user by riotId",
+          "parameters":"123",
+          "requestBody": {
+            "content": {
+              "params": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "name": "Category 1",
+                    "description": "Category 1 description"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "500": {
+              "description": "Category already exists"
+            }
+          }
+        }
+      },
+      "/categories/import": {
+        "post":{
+          "tags": ["Category"],
+          "summary": "Upload a new categories",
+          "description": "Upload a new categories",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201":{
+              "description": "Created"
+            }
+          }
+        }
+      },
+      "/specifications": {
+        "post": {
+          "tags": ["Specifications"],
+          "summary": "Create a specification",
+          "description": "Create a new specification",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Specification"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "500": {
+              "description": "Specification already exists"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Specification": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
