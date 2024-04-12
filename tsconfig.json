@@ -17,7 +17,7 @@
 		"skipLibCheck": true,
 		"baseUrl": "./src/"
 	},
-	"include": ["src/**/*"],
+	"include": ["./api/*.ts", "src/**/*"],
 	"exclude": ["node_modules", "dist"],
 	"ts-node": {
 		"files": true
