@@ -31,3 +31,8 @@ export const spectateProfile = axios.create({
     baseURL: routesApi.spectateProfile,
     headers: { "X-Riot-Token": process.env.API_KEY }
 })
+
+export const championMastery = axios.create({
+    baseURL: routesApi.championMastery,
+    headers: { "X-Riot-Token": process.env.API_KEY }
+})

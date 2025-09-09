@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { detailsMatchs, rankProfile, searchByPuuid, searchByTagline, searchMatchsIds, spectateProfile } from './../service/apiRiot';
+import { championMastery, detailsMatchs, rankProfile, searchByPuuid, searchByTagline, searchMatchsIds, spectateProfile } from './../service/apiRiot';
 import { AppError } from '../Errors/AppError';
 import { CacheService, cacheService, CACHE_KEYS } from '../service/cacheService';
 
@@ -120,6 +120,36 @@ export class leagueController {
             res.status(200).json({ gameData: spectate.data })
         } catch (error) {
             throw new AppError("User not playing", 404)
+        }
+    }
+
+    async championMasteryProfile(req: Request, res: Response) {
+        const { puuid } = req.params;
+        
+        if (!puuid) {
+            throw new AppError("PUUID é obrigatório", 400);
+        }
+
+        const cacheKey = CacheService.generateKey(CACHE_KEYS.USER_MASTERY, puuid);
+        
+        const cachedMastery = cacheService.get(cacheKey);
+        if (cachedMastery) {
+            return res.status(200).json(cachedMastery);
+        }
+
+        try {
+            const masteryData = await championMastery.get(`/${puuid}`);
+            
+            const response = { mastery: masteryData.data };
+            
+            cacheService.set(cacheKey, response, 1800000); // 30 minutos de cache
+
+            res.status(200).json(response);
+        } catch (error: any) {
+            if (error.response?.status === 404) {
+                throw new AppError("Dados de maestria não encontrados", 404);
+            }
+            throw new AppError("Erro ao buscar dados de maestria", 500);
         }
     }
 }

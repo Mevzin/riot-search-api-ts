@@ -35,4 +35,11 @@ leagueRoutes.get('/spectateGame/:puuid',
     new leagueController().spectateProfile
 );
 
+leagueRoutes.get('/championMastery/:puuid', 
+    rateLimiter,
+    ValidationMiddleware.sanitizeInput,
+    ValidationMiddleware.validatePuuid,
+    new leagueController().championMasteryProfile
+);
+
 export { leagueRoutes };
