@@ -20,7 +20,7 @@ export class ValidationMiddleware {
             throw new AppError('Tag deve ter entre 3 e 5 caracteres', 400);
         }
         
-        const nameRegex = /^[a-zA-Z0-9\s]+$/;
+        const nameRegex = /^[\p{L}\p{N}\s]+$/u;
         const tagRegex = /^[a-zA-Z0-9]+$/;
         
         if (!nameRegex.test(cleanName)) {

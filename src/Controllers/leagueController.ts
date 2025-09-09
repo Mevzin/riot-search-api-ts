@@ -50,12 +50,20 @@ export class leagueController {
 
     async searchMatch(req: Request, res: Response) {
         const { puuid } = req.params;
+        const { start = '0', count = '10' } = req.query;
         
         if (!puuid) {
             throw new AppError("PUUID é obrigatório", 400);
         }
 
-        const cacheKey = CacheService.generateKey(CACHE_KEYS.USER_MATCHES, puuid);
+        const startNum = parseInt(start as string, 10);
+        const countNum = Math.min(parseInt(count as string, 10), 20);
+
+        if (isNaN(startNum) || isNaN(countNum) || startNum < 0 || countNum <= 0) {
+            throw new AppError("Parâmetros start e count devem ser números válidos", 400);
+        }
+
+        const cacheKey = CacheService.generateKey(CACHE_KEYS.USER_MATCHES, puuid, startNum.toString(), countNum.toString());
         
         const cachedMatches = cacheService.get(cacheKey);
         if (cachedMatches) {
@@ -64,14 +72,22 @@ export class leagueController {
 
         let matchlist = [];
         try {
-            const listMatchs = await searchMatchsIds.get(`/${puuid}/ids?count=10`)
+            const listMatchs = await searchMatchsIds.get(`/${puuid}/ids?start=${startNum}&count=${countNum}`)
 
             for (let i = 0; i < listMatchs.data.length; i++) {
                 const matchInfo = await detailsMatchs.get(`${listMatchs.data[i]}`)
                 matchlist.push(matchInfo.data)
             }
             
-            const response = { matchlist };
+            const response = { 
+                matchlist,
+                pagination: {
+                    start: startNum,
+                    count: countNum,
+                    total: listMatchs.data.length,
+                    hasMore: listMatchs.data.length === countNum
+                }
+            };
             
             cacheService.set(cacheKey, response, 300000);
             
