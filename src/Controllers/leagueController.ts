@@ -142,7 +142,7 @@ export class leagueController {
             
             const response = { mastery: masteryData.data };
             
-            cacheService.set(cacheKey, response, 1800000); // 30 minutos de cache
+            cacheService.set(cacheKey, response, 1800000);
 
             res.status(200).json(response);
         } catch (error: any) {
