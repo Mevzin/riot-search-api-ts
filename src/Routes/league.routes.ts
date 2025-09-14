@@ -42,4 +42,11 @@ leagueRoutes.get('/championMastery/:puuid',
     new leagueController().championMasteryProfile
 );
 
+leagueRoutes.get('/recentTeammates/:puuid', 
+    rateLimiter,
+    ValidationMiddleware.sanitizeInput,
+    ValidationMiddleware.validatePuuid,
+    new leagueController().recentTeammates
+);
+
 export { leagueRoutes };

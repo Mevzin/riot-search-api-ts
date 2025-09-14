@@ -118,7 +118,8 @@ export const CACHE_KEYS = {
   USER_MATCHES: 'user_matches',
   USER_RANK: 'user_rank',
   SPECTATE_GAME: 'spectate_game',
-  USER_MASTERY: 'user_mastery'
+  USER_MASTERY: 'user_mastery',
+  USER_TEAMMATES: 'user_teammates'
 } as const;
 
 export type CacheKey = typeof CACHE_KEYS[keyof typeof CACHE_KEYS];
